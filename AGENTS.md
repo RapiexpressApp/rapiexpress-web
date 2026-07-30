@@ -25,9 +25,10 @@ Do not rename, translate, or reorder these values in code — they are domain co
 ## Tech Stack
 
 | Concern | Choice |
-|---|---|
+|---|---|---|
 | Language | TypeScript (strict mode) |
 | Build tool | Vite |
+| Package manager | pnpm |
 | UI Framework | React |
 | Styling / Components | Tailwind CSS + shadcn/ui |
 | Server state / API calls | TanStack Query |
@@ -109,12 +110,14 @@ src/
 > Update this section once `package.json` scripts are finalized.
 
 ```bash
-npm install       # install dependencies
-npm run dev       # start Vite dev server
-npm run build     # production build
-npm run lint      # run linter
-npm run preview   # preview production build locally
+pnpm install       # install dependencies
+pnpm dev           # start Vite dev server
+pnpm build         # production build
+pnpm lint          # run linter
+pnpm preview       # preview production build locally
 ```
+
+> Use `pnpm` (v10+) as the package manager. Do not use `npm` or `yarn`. Lockfile is `pnpm-lock.yaml`.
 
 ---
 
@@ -132,6 +135,6 @@ npm run preview   # preview production build locally
 
 - [ ] .NET API base URL and authentication flow (JWT? cookies?)
 - [ ] Final API contract for packages, locker, and auth endpoints
-- [ ] Form validation library (proposed: Zod)
+- [x] Form validation library (Zod)
 - [ ] Testing strategy/framework (not yet defined)
 - [ ] Deployment target
