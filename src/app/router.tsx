@@ -3,6 +3,7 @@ import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import DashboardPage from '@/pages/DashboardPage'
 import PackageTrackingPage from '@/pages/PackageTrackingPage'
+import LandingPage from '@/pages/LandingPage'
 import { useSession } from '@/features/auth/hooks/useSession'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,7 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 export function AppRouter() {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route
         path="/login"
         element={
@@ -52,7 +54,7 @@ export function AppRouter() {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }
