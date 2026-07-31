@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
@@ -11,7 +11,6 @@ import {
   HeadphonesIcon,
   ArrowRight,
   ChevronRight,
-  Menu,
   X,
   Truck,
   Warehouse,
@@ -20,9 +19,9 @@ import {
 } from 'lucide-react'
 
 const navLinks = [
-  { label: 'Cómo funciona', href: '#como-funciona' },
-  { label: 'Beneficios', href: '#beneficios' },
-  { label: 'Cobertura', href: '#cobertura' },
+  { label: 'Cómo funciona', href: '#como-funciona', icon: Plane },
+  { label: 'Beneficios', href: '#beneficios', icon: TrendingUp },
+  { label: 'Cobertura', href: '#cobertura', icon: Globe },
 ]
 
 const steps = [
@@ -75,6 +74,8 @@ export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showMobileCta, setShowMobileCta] = useState(false)
+  const hamburgerRef = useRef<HTMLButtonElement>(null)
+  const drawerCloseRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     function onScroll() {
@@ -101,13 +102,26 @@ export default function LandingPage() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [mobileMenuOpen])
 
+  const initialRender = useRef(true)
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false
+      return
+    }
+    if (mobileMenuOpen) {
+      drawerCloseRef.current?.focus()
+    } else {
+      hamburgerRef.current?.focus()
+    }
+  }, [mobileMenuOpen])
+
   return (
     <div className="overflow-hidden">
       {/* ─── Navbar ─── */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled || mobileMenuOpen
-            ? 'bg-white/85 backdrop-blur-lg shadow-sm border-b border-border'
+            ? 'bg-white/90 backdrop-blur-lg shadow-sm border-b border-border'
             : 'bg-transparent'
         }`}
       >
@@ -116,12 +130,16 @@ export default function LandingPage() {
             <img src="/logo.webp" alt="Rapiexpress" className="h-8 sm:h-9 md:h-11 w-auto" />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-9">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-brand-dark transition-colors"
+                className={`relative text-sm font-medium transition-colors duration-200 after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:transition-all after:duration-300 after:content-[''] ${
+                  scrolled || mobileMenuOpen
+                    ? 'text-brand-dark/80 hover:text-brand-dark after:bg-accent hover:after:w-full'
+                    : 'text-white/85 hover:text-white after:bg-accent-light hover:after:w-full'
+                }`}
               >
                 {link.label}
               </a>
@@ -133,7 +151,11 @@ export default function LandingPage() {
               <Button
                 variant="ghost"
                 size="sm"
-                className={scrolled ? 'text-foreground' : 'text-white'}
+                className={`transition-colors duration-200 ${
+                  scrolled || mobileMenuOpen
+                    ? 'text-brand-dark hover:bg-brand-muted hover:text-brand-dark'
+                    : 'text-white border border-white/25 bg-white/10 hover:bg-white/20 hover:text-white'
+                }`}
               >
                 Iniciar sesión
               </Button>
@@ -145,65 +167,117 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <button
-            className={`md:hidden flex items-center justify-center w-11 h-11 -mr-2 rounded-lg transition-colors ${
-              scrolled || mobileMenuOpen
-                ? 'text-brand-dark hover:bg-brand-muted'
-                : 'text-white hover:bg-white/10'
-            }`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        <div
-          id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
-            mobileMenuOpen ? 'max-h-[calc(100svh-4rem)] opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <div className="bg-white border-t border-border px-4 sm:px-5 pt-2 pb-6 shadow-lg">
-            <nav className="flex flex-col">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-3.5 text-base font-medium text-foreground border-b border-border/60 last:border-0"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-            <div className="flex flex-col gap-3 pt-5">
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full" size="lg">
-                  Iniciar sesión
-                </Button>
-              </Link>
-              <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                <Button size="lg" className="w-full bg-accent hover:bg-accent-dark text-brand-dark">
-                  Registrarse
-                </Button>
-              </Link>
-            </div>
+          {/* Mobile: CTA + hamburger */}
+          <div className="flex md:hidden items-center gap-1.5">
+            <Link to="/register">
+              <Button
+                size="sm"
+                className="h-9 rounded-lg bg-accent hover:bg-accent-dark text-brand-dark shadow-sm"
+              >
+                Registrarse
+              </Button>
+            </Link>
+            <button
+              ref={hamburgerRef}
+              className={`relative flex items-center justify-center w-11 h-11 -mr-2 rounded-lg transition-colors ${
+                scrolled || mobileMenuOpen
+                  ? 'text-brand-dark hover:bg-brand-muted'
+                  : 'text-white hover:bg-white/10'
+              }`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span
+                className={`absolute block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                  mobileMenuOpen ? 'rotate-45' : '-translate-y-[3px]'
+                }`}
+              />
+              <span
+                className={`absolute block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                  mobileMenuOpen ? '-rotate-45' : 'translate-y-[3px]'
+                }`}
+              />
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Backdrop para cerrar el menú mobile */}
+      {/* Backdrop para cerrar el drawer */}
       <div
-        className={`fixed inset-0 top-16 z-40 bg-brand-dark/40 backdrop-blur-[2px] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[55] bg-brand-dark/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setMobileMenuOpen(false)}
         aria-hidden="true"
       />
+
+      {/* Mobile drawer */}
+      <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú de navegación"
+        className={`fixed inset-y-0 right-0 z-[60] flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out md:hidden ${
+          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex items-center justify-between h-16 px-4 sm:px-5 border-b border-border">
+          <img src="/logo.webp" alt="Rapiexpress" className="h-8 w-auto" />
+          <button
+            ref={drawerCloseRef}
+            className="flex items-center justify-center w-11 h-11 -mr-2 rounded-lg text-brand-dark hover:bg-brand-muted transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          {navLinks.map((link) => {
+            const Icon = link.icon
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="group flex items-center justify-between rounded-lg px-4 py-3 transition-colors hover:bg-brand-muted"
+              >
+                <span className="flex items-center gap-3.5 text-base font-medium text-brand-dark">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand-muted text-brand group-hover:bg-brand group-hover:text-white transition-colors">
+                    <Icon size={20} strokeWidth={1.75} />
+                  </span>
+                  {link.label}
+                </span>
+                <ChevronRight
+                  size={18}
+                  className="text-muted-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-brand"
+                />
+              </a>
+            )
+          })}
+        </nav>
+
+        <div className="border-t border-border p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] space-y-3">
+          <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="outline" size="lg" className="w-full">
+              Iniciar sesión
+            </Button>
+          </Link>
+          <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
+            <Button size="lg" className="w-full bg-accent hover:bg-accent-dark text-brand-dark shadow-sm">
+              Abrir cuenta gratis
+              <ArrowRight size={16} />
+            </Button>
+          </Link>
+          <div className="flex items-center justify-center gap-2 pt-1.5 text-xs text-muted-foreground">
+            <HeadphonesIcon size={14} className="text-accent-dark" />
+            WhatsApp: +1 (305) 555-0123
+          </div>
+        </div>
+      </div>
 
       {/* ─── Hero ─── */}
       <section className="relative min-h-svh flex items-center bg-gradient-to-br from-brand-dark via-brand-mid to-brand pt-16 md:pt-0">
@@ -473,7 +547,7 @@ export default function LandingPage() {
       {/* ─── Mobile sticky CTA ─── */}
       <div
         className={`fixed bottom-0 inset-x-0 z-40 md:hidden transition-transform duration-300 ease-out ${
-          showMobileCta ? 'translate-y-0' : 'translate-y-full'
+          showMobileCta && !mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
         <div className="bg-white/95 backdrop-blur border-t border-border px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
