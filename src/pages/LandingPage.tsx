@@ -539,7 +539,6 @@ export default function LandingPage() {
 
           <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
             <p>© {new Date().getFullYear()} Rapiexpress. Todos los derechos reservados.</p>
-            <p className="text-white/40">Hecho con ❤️ en Ecuador 🇪🇨</p>
           </div>
         </div>
       </footer>
