@@ -4,35 +4,34 @@
   --font-heading: 'Sora', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 
-  --color-brand-dark: hsl(180, 50%, 12%);
-  --color-brand-mid: hsl(180, 55%, 25%);
-  --color-brand: hsl(180, 58%, 30%);
-  --color-brand-light: hsl(180, 60%, 40%);
-  --color-accent: hsl(18, 65%, 56%);
-  --color-accent-light: hsl(18, 70%, 66%);
-  --color-accent-dark: hsl(18, 60%, 46%);
-  --color-cream: hsl(36, 50%, 97%);
-  --color-cream-dark: hsl(36, 35%, 92%);
+  --color-brand-dark: #16328f;
+  --color-brand-mid: #1b37a4;
+  --color-brand: #1e40af;
+  --color-brand-light: #4a73d9;
+  --color-brand-muted: #eef2fb;
 
-  --color-background: var(--color-cream);
-  --color-foreground: hsl(180, 20%, 12%);
-  --color-card: hsl(0, 0%, 100%);
-  --color-card-foreground: hsl(180, 20%, 12%);
-  --color-popover: hsl(0, 0%, 100%);
-  --color-popover-foreground: hsl(180, 20%, 12%);
-  --color-primary: var(--color-brand);
-  --color-primary-foreground: hsl(0, 0%, 98%);
-  --color-secondary: hsl(180, 20%, 95%);
-  --color-secondary-foreground: var(--color-brand-dark);
-  --color-muted: hsl(36, 25%, 93%);
-  --color-muted-foreground: hsl(180, 10%, 40%);
-  --color-accent-theme: var(--color-accent);
-  --color-accent-theme-foreground: hsl(0, 0%, 98%);
-  --color-destructive: hsl(0, 70%, 50%);
-  --color-destructive-foreground: hsl(0, 0%, 98%);
-  --color-border: hsl(36, 25%, 87%);
-  --color-input: hsl(36, 25%, 87%);
-  --color-ring: var(--color-brand-light);
+  --color-accent: #facc15;
+  --color-accent-light: #fde047;
+  --color-accent-dark: #eab308;
+  --color-accent-foreground: #16328f;
+
+  --color-background: #ffffff;
+  --color-foreground: #444653;
+  --color-card: #ffffff;
+  --color-card-foreground: #444653;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #444653;
+  --color-primary: #1e40af;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f1f3f7;
+  --color-secondary-foreground: #16328f;
+  --color-muted: #f1f3f7;
+  --color-muted-foreground: #8a8c95;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e2e4e8;
+  --color-input: #e2e4e8;
+  --color-ring: #4a73d9;
   --radius: 0.625rem;
 }
 
@@ -47,6 +46,10 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
 
   body {
