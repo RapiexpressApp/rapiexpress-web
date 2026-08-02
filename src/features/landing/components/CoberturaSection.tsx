@@ -37,7 +37,7 @@ export function CoberturaSection() {
             Cobertura
           </p>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-white leading-tight">
-            Conectamos tres continentes para ti
+            Conectamos tres paises para ti
           </h2>
         </div>
 
