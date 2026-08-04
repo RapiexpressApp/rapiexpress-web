@@ -1,20 +1,21 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/shared/components/ui/button'
 import { ChevronRight } from 'lucide-react'
+import { US, CN, EC } from 'country-flag-icons/react/3x2'
 
 const places = [
   {
-    flag: '🇺🇸',
+    Flag: US,
     title: 'USA',
     desc: 'New York, Miami, Los Ángeles. Compra en Amazon, Walmart, Target y más.',
   },
   {
-    flag: '🇨🇳',
+    Flag: CN,
     title: 'China',
     desc: 'Shenzhen, Shanghai, Beijing. Acceso a AliExpress, Shein, Alibaba.',
   },
   {
-    flag: '🇪🇨',
+    Flag: EC,
     title: 'Ecuador',
     desc: 'Entrega puerta a puerta en Quito, Guayaquil, Cuenca y todo el país.',
   },
@@ -42,14 +43,16 @@ export function CoberturaSection() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3 md:gap-12 items-center">
-          {places.map((place) => (
+          {places.map(({ Flag, title, desc }) => (
             <div
-              key={place.title}
+              key={title}
               className="text-center text-white/90 p-6 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm"
             >
-              <span className="text-5xl block mb-4">{place.flag}</span>
-              <h3 className="font-heading font-semibold text-xl text-white mb-2">{place.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed">{place.desc}</p>
+              <div className="flex justify-center mb-4">
+                <Flag className="h-10 w-14 rounded-md ring-1 ring-white/15 shadow-lg" />
+              </div>
+              <h3 className="font-heading font-semibold text-xl text-white mb-2">{title}</h3>
+              <p className="text-sm text-white/60 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
