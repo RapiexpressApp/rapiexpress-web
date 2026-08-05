@@ -2,29 +2,25 @@ import { usePackages } from '@/features/packages/hooks/usePackages'
 import { useLocker } from '@/features/locker/hooks/useLocker'
 import { PackageCard } from '@/features/packages/components/PackageCard'
 import { LockerInfoCard } from '@/features/locker/components/LockerInfoCard'
-import { useSession } from '@/features/auth/hooks/useSession'
-import { Button } from '@/shared/components/ui/button'
+import { LoadingState } from '@/shared/components/feedback/LoadingState'
+import { EmptyState } from '@/shared/components/feedback/EmptyState'
 
 export default function DashboardPage() {
-  const { user, logout } = useSession()
   const { data: packagesData, isLoading: packagesLoading } = usePackages()
   const { data: lockerData, isLoading: lockerLoading } = useLocker()
 
   return (
-    <div className="min-h-screen p-4 max-w-5xl mx-auto space-y-6">
-      <header className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Mis Paquetes</h1>
-          <p className="text-sm text-muted-foreground">{user?.name}</p>
-        </div>
-        <Button variant="outline" onClick={logout}>
-          Cerrar sesión
-        </Button>
-      </header>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">Mis Paquetes</h1>
+        <p className="text-sm text-muted-foreground">
+          Resumen de tu casillero y tus envíos en camino.
+        </p>
+      </div>
 
       <section>
         {lockerLoading ? (
-          <p className="text-sm text-muted-foreground">Cargando casillero...</p>
+          <LoadingState label="Cargando casillero..." />
         ) : lockerData?.data ? (
           <LockerInfoCard locker={lockerData.data} />
         ) : null}
@@ -32,17 +28,18 @@ export default function DashboardPage() {
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {packagesLoading ? (
-          <p className="text-sm text-muted-foreground col-span-full">
-            Cargando paquetes...
-          </p>
+          <LoadingState label="Cargando paquetes..." className="col-span-full" />
         ) : packagesData?.data?.length ? (
           packagesData.data.map((pkg) => (
             <PackageCard key={pkg.id} pkg={pkg} />
           ))
         ) : (
-          <p className="text-sm text-muted-foreground col-span-full">
-            No hay paquetes registrados.
-          </p>
+          <div className="col-span-full py-8">
+            <EmptyState
+              title="No hay paquetes registrados."
+              description="Cuando realices una compra, aquí verás el resumen de tus envíos."
+            />
+          </div>
         )}
       </section>
     </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/shared/components/ui/button'
 import { ChevronRight, Home, Mail, MessageCircle, X } from 'lucide-react'
 import { cn } from '@/shared/lib/utils'
+import { Logo } from '@/shared/components/layout/Logo'
 import { navLinks } from '../data'
 
 interface LandingNavbarProps {
@@ -94,9 +95,7 @@ export function LandingNavbar({ mobileMenuOpen, onMenuChange }: LandingNavbarPro
         )}
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-5 h-16 md:h-20">
-          <Link to="/" className="flex items-center">
-            <img src="/logo.webp" alt="Rapiexpress" className="h-8 sm:h-9 md:h-11 w-auto" />
-          </Link>
+          <Logo to="/" />
 
           <nav className="hidden md:flex items-center gap-4 xl:gap-7">
             {navLinks.map((link) => {
@@ -201,7 +200,7 @@ export function LandingNavbar({ mobileMenuOpen, onMenuChange }: LandingNavbarPro
         )}
       >
         <div className="flex items-center justify-between h-16 px-4 sm:px-5 border-b border-border">
-          <img src="/logo.webp" alt="Rapiexpress" className="h-8 w-auto" />
+          <Logo to="/" className="h-8" />
           <button
             ref={drawerCloseRef}
             className="flex items-center justify-center w-11 h-11 -mr-2 rounded-lg text-brand-dark hover:bg-brand-muted transition-colors"

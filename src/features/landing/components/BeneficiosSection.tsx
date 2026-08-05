@@ -1,4 +1,5 @@
 import { HeadphonesIcon, ShieldCheck, TrendingUp, Warehouse } from 'lucide-react'
+import { SectionHeading } from '@/shared/components/layout/SectionHeading'
 
 const features = [
   {
@@ -27,14 +28,10 @@ export function BeneficiosSection() {
   return (
     <section id="beneficios" className="py-16 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
-        <div className="text-center max-w-xl mx-auto mb-12 md:mb-16">
-          <p className="text-accent font-heading font-semibold text-sm tracking-widest uppercase mb-3">
-            Beneficios
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-brand-dark leading-tight">
-            Por qué elegir Rapiexpress
-          </h2>
-        </div>
+        <SectionHeading
+          eyebrow="Beneficios"
+          title="Por qué elegir Rapiexpress"
+        />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature, i) => {

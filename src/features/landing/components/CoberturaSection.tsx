@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/shared/components/ui/button'
 import { ChevronRight } from 'lucide-react'
 import { US, CN, EC } from 'country-flag-icons/react/3x2'
+import { SectionHeading } from '@/shared/components/layout/SectionHeading'
 
 const places = [
   {
@@ -33,14 +34,11 @@ export function CoberturaSection() {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-5">
-        <div className="text-center max-w-xl mx-auto mb-12 md:mb-16">
-          <p className="text-accent font-heading font-semibold text-sm tracking-widest uppercase mb-3">
-            Cobertura
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-white leading-tight">
-            Conectamos tres paises para ti
-          </h2>
-        </div>
+        <SectionHeading
+          eyebrow="Cobertura"
+          title="Conectamos tres paises para ti"
+          inverted
+        />
 
         <div className="grid gap-4 md:grid-cols-3 md:gap-12 items-center">
           {places.map(({ Flag, title, desc }) => (

@@ -1,4 +1,5 @@
 import { Globe, MapPin, Package, Ship } from 'lucide-react'
+import { SectionHeading } from '@/shared/components/layout/SectionHeading'
 
 const steps = [
   {
@@ -27,14 +28,10 @@ export function ComoFuncionaSection() {
   return (
     <section id="como-funciona" className="py-16 md:py-28 bg-brand-muted">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
-        <div className="text-center max-w-xl mx-auto mb-12 md:mb-16">
-          <p className="text-accent font-heading font-semibold text-sm tracking-widest uppercase mb-3">
-            Cómo funciona
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-brand-dark leading-tight">
-            Tu paquete, desde la tienda hasta tu casa
-          </h2>
-        </div>
+        <SectionHeading
+          eyebrow="Cómo funciona"
+          title="Tu paquete, desde la tienda hasta tu casa"
+        />
 
         <div className="grid gap-10 md:grid-cols-4 md:gap-6 relative">
           <div className="hidden md:block absolute top-12 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-brand-light/40 via-accent/60 to-brand-light/40" />

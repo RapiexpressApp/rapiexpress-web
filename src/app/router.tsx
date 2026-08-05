@@ -5,6 +5,7 @@ import DashboardPage from '@/pages/DashboardPage'
 import PackageTrackingPage from '@/pages/PackageTrackingPage'
 import LandingPage from '@/pages/LandingPage'
 import { useSession } from '@/features/auth/hooks/useSession'
+import { AppLayout } from '@/app/layouts/AppLayout'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useSession()
@@ -39,21 +40,15 @@ export function AppRouter() {
         }
       />
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <AppLayout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/tracking/:trackingNumber"
-        element={
-          <ProtectedRoute>
-            <PackageTrackingPage />
-          </ProtectedRoute>
-        }
-      />
+      >
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/tracking/:trackingNumber" element={<PackageTrackingPage />} />
+      </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
