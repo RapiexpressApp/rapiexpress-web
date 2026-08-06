@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLogin } from '../hooks/useLogin'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
@@ -40,6 +40,14 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+      </div>
+      <div className="text-right">
+        <Link
+          to="/forgot-password"
+          className="text-sm text-primary underline-offset-4 hover:underline"
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
       </div>
       {loginMutation.isError && (
         <p className="text-sm text-destructive">
