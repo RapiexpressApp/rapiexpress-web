@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { usePackageDetail } from '@/features/packages/hooks/usePackageDetail'
+import { StatusStepper } from '@/features/packages/components/StatusStepper'
 import { TrackingTimeline } from '@/features/packages/components/TrackingTimeline'
-import { Button } from '@/shared/components/ui/button'
 import { LoadingState } from '@/shared/components/feedback/LoadingState'
 import { EmptyState } from '@/shared/components/feedback/EmptyState'
 
@@ -10,21 +11,42 @@ export default function PackageTrackingPage() {
   const navigate = useNavigate()
   const { data, isLoading } = usePackageDetail(trackingNumber ?? '')
 
+  const history = data?.data ?? []
+  const currentStatus = history[0]?.status
+
   return (
-    <div className="space-y-4 max-w-2xl">
-      <Button variant="ghost" onClick={() => navigate('/dashboard')}>
-        ← Volver
-      </Button>
+    <div className="mx-auto max-w-3xl space-y-8">
+      <button
+        type="button"
+        onClick={() => navigate('/dashboard')}
+        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg px-0 py-1"
+      >
+        <ArrowLeft size={16} />
+        Volver a mis paquetes
+      </button>
+
+      <section className="animate-fade-in-up">
+        <p className="text-xs font-medium uppercase tracking-[0.25em] text-brand-light">
+          Rastreo de guía
+        </p>
+        <h1 className="mt-1 font-mono text-2xl font-medium tracking-wider text-brand-dark sm:text-3xl">
+          {trackingNumber}
+        </h1>
+      </section>
 
       {isLoading ? (
-        <LoadingState label="Cargando historial..." />
-      ) : data?.data ? (
-        <TrackingTimeline
-          history={data.data}
-          trackingNumber={trackingNumber ?? ''}
-        />
+        <LoadingState label="Cargando ruta..." />
+      ) : history.length ? (
+        <>
+          <section className="animate-fade-in-up animate-delay-100">
+            {currentStatus && <StatusStepper currentStatus={currentStatus} />}
+          </section>
+          <section className="animate-fade-in-up animate-delay-200">
+            <TrackingTimeline history={history} trackingNumber={trackingNumber ?? ''} />
+          </section>
+        </>
       ) : (
-        <EmptyState title="No se encontró información para este paquete." />
+        <EmptyState title="No se encontró información para esta guía." />
       )}
     </div>
   )

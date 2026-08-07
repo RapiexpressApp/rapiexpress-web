@@ -3,12 +3,18 @@
 @theme {
   --font-heading: 'Sora', sans-serif;
   --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
 
   --color-brand-dark: #16328f;
   --color-brand-mid: #1b37a4;
   --color-brand: #1e40af;
   --color-brand-light: #4a73d9;
   --color-brand-muted: #eef2fb;
+
+  --color-ink: #0b1120;
+  --color-ink-soft: #121a2e;
+  --color-paper: #f7f8fb;
+  --color-paper-warm: #fbf9f5;
 
   --color-accent: #facc15;
   --color-accent-light: #fde047;
@@ -95,6 +101,54 @@
 .animate-delay-300 { animation-delay: 300ms; }
 .animate-delay-400 { animation-delay: 400ms; }
 .animate-delay-500 { animation-delay: 500ms; }
+
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.animate-route-dash {
+  stroke-dasharray: 6 8;
+  animation: route-dash 2.4s linear infinite;
+}
+
+@keyframes glint {
+  0% { transform: translateX(-120%) skewX(-24deg); }
+  55%, 100% { transform: translateX(420%) skewX(-24deg); }
+}
+
+.animate-glint {
+  animation: glint 4.5s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 26s linear infinite;
+}
+
+.bg-grid-rides {
+  background-image:
+    linear-gradient(to right, rgb(11 17 32 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(11 17 32 / 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgb(11 17 32 / 0.14) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
