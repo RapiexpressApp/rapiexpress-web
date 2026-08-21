@@ -1,49 +1,88 @@
 import { usePackages } from '@/features/packages/hooks/usePackages'
-import { useLocker } from '@/features/locker/hooks/useLocker'
 import { PackageCard } from '@/features/packages/components/PackageCard'
-import { LockerInfoCard } from '@/features/locker/components/LockerInfoCard'
+import { PackageSummaryCards } from '@/features/packages/components/PackageSummaryCards'
+import { LoadingState } from '@/shared/components/feedback/LoadingState'
+import { EmptyState } from '@/shared/components/feedback/EmptyState'
+import { ErrorState } from '@/shared/components/feedback/ErrorState'
 import { useSession } from '@/features/auth/hooks/useSession'
-import { Button } from '@/shared/components/ui/button'
 
 export default function DashboardPage() {
-  const { user, logout } = useSession()
-  const { data: packagesData, isLoading: packagesLoading } = usePackages()
-  const { data: lockerData, isLoading: lockerLoading } = useLocker()
+  const {
+    data: packagesData,
+    isLoading: packagesLoading,
+    isError: packagesError,
+    refetch: refetchPackages,
+  } = usePackages()
+  const { user } = useSession()
+
+  const firstName = user?.name?.split(/\s+/)[0] ?? 'viajero'
+  const packages = packagesData?.data ?? []
 
   return (
-    <div className="min-h-screen p-4 max-w-5xl mx-auto space-y-6">
-      <header className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Mis Paquetes</h1>
-          <p className="text-sm text-muted-foreground">{user?.name}</p>
-        </div>
-        <Button variant="outline" onClick={logout}>
-          Cerrar sesión
-        </Button>
+    <div className="space-y-8">
+      <header className="animate-fade-in-up">
+        <p className="text-xs font-medium uppercase tracking-[0.25em] text-brand-light">
+          Panel del cliente
+        </p>
+        <h1 className="mt-2 font-heading text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl">
+          Hola, {firstName}
+        </h1>
+        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+          Un vistazo a las guías que están en camino desde Miami hasta Ecuador.
+        </p>
       </header>
 
-      <section>
-        {lockerLoading ? (
-          <p className="text-sm text-muted-foreground">Cargando casillero...</p>
-        ) : lockerData?.data ? (
-          <LockerInfoCard locker={lockerData.data} />
-        ) : null}
+      <section className="animate-fade-in-up animate-delay-100">
+        {packagesLoading ? (
+          <LoadingState label="Calculando resumen..." />
+        ) : packagesError ? (
+          <ErrorState
+            title="No pudimos cargar tu resumen."
+            onRetry={() => void refetchPackages()}
+          />
+        ) : (
+          <PackageSummaryCards packages={packages} />
+        )}
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {packagesLoading ? (
-          <p className="text-sm text-muted-foreground col-span-full">
-            Cargando paquetes...
-          </p>
-        ) : packagesData?.data?.length ? (
-          packagesData.data.map((pkg) => (
-            <PackageCard key={pkg.id} pkg={pkg} />
-          ))
-        ) : (
-          <p className="text-sm text-muted-foreground col-span-full">
-            No hay paquetes registrados.
-          </p>
-        )}
+      <section className="animate-fade-in-up animate-delay-200">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-heading text-base font-bold text-ink">Mis paquetes</h2>
+          <span className="font-mono text-xs text-muted-foreground">
+            {packages.length} guía{packages.length === 1 ? '' : 's'}
+          </span>
+        </div>
+
+        <div className="mt-3">
+          {packagesLoading ? (
+            <LoadingState label="Cargando paquetes..." />
+          ) : packagesError ? (
+            <ErrorState
+              title="No pudimos cargar tus paquetes."
+              description="Verifica tu conexión e intenta de nuevo."
+              onRetry={() => void refetchPackages()}
+              className="rounded-2xl border border-dashed border-border bg-card py-12"
+            />
+          ) : packages.length ? (
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {packages.map((pkg, i) => (
+                <div
+                  key={pkg.id}
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${200 + i * 70}ms` }}
+                >
+                  <PackageCard pkg={pkg} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              title="No hay paquetes registrados."
+              description="Cuando hagas una compra en USA o China, aquí verás el resumen de tu envío y podrás rastrearlo paso a paso."
+              className="rounded-2xl border border-dashed border-border bg-card py-12"
+            />
+          )}
+        </div>
       </section>
     </div>
   )

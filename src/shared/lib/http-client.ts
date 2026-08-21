@@ -1,15 +1,23 @@
-import type { ApiResponse } from '@/shared/types/api'
+import type { ApiError, ApiResponse } from '@/shared/types/api'
 import { useAuthStore } from '@/stores/authStore'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api'
+const BASE_URL: string | undefined = import.meta.env.VITE_API_BASE_URL
 
-class HttpClientError extends Error {
+if (!BASE_URL) {
+  console.warn(
+    '[http-client] VITE_API_BASE_URL no está definido. Copia .env.example a .env y configura la URL de la API.',
+  )
+}
+
+export class HttpClientError extends Error implements ApiError {
   status: number
+  errors?: Record<string, string[]>
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, errors?: Record<string, string[]>) {
     super(message)
     this.name = 'HttpClientError'
     this.status = status
+    this.errors = errors
   }
 }
 
@@ -34,9 +42,17 @@ async function request<T>(
   })
 
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      useAuthStore.getState().clearAuth()
+      window.location.assign('/login')
+    }
+    const payload = (await response.json().catch(() => null)) as
+      | Partial<ApiError>
+      | null
     throw new HttpClientError(
-      `HTTP ${response.status}: ${response.statusText}`,
+      payload?.message ?? `HTTP ${response.status}: ${response.statusText}`,
       response.status,
+      payload?.errors,
     )
   }
 
@@ -75,5 +91,3 @@ export const httpClient = {
     return request<T>(endpoint, { method: 'DELETE' })
   },
 }
-
-export { HttpClientError }

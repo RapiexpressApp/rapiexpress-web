@@ -1,13 +1,8 @@
-export interface LoginRequest {
-  email: string
-  password: string
-}
+import type { LoginInput, RegisterInput } from './schemas'
 
-export interface RegisterRequest {
-  email: string
-  password: string
-  name: string
-}
+export type LoginRequest = LoginInput
+
+export type RegisterRequest = RegisterInput
 
 export interface AuthResponse {
   token: string

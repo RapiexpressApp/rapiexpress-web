@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/shared/lib/utils'
+import { SectionHeading } from '@/shared/components/layout/SectionHeading'
 
 const faqs = [
   {
@@ -35,14 +36,7 @@ export function FaqSection() {
   return (
     <section id="preguntas-frecuentes" className="py-16 md:py-28 bg-brand-muted">
       <div className="max-w-3xl mx-auto px-4 sm:px-5">
-        <div className="text-center mb-12 md:mb-14">
-          <p className="text-accent font-heading font-semibold text-sm tracking-widest uppercase mb-3">
-            Preguntas frecuentes
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-brand-dark leading-tight">
-            Resolvemos tus dudas
-          </h2>
-        </div>
+        <SectionHeading eyebrow="Preguntas frecuentes" title="Resolvemos tus dudas" />
 
         <div className="space-y-3">
           {faqs.map((faq, i) => {

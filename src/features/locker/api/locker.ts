@@ -1,6 +1,9 @@
-import { httpClient } from '@/shared/lib/http-client'
-import type { LockerInfo } from '../types'
+// =====================================================================
+// MOCK DE DEMOSTRACIÓN — ver src/shared/mocks/demo.ts
+// API auténtica (cuando exista): GET /locker
+// =====================================================================
+import { mockResponse, MOCK_LOCKER } from '@/shared/mocks/demo'
 
 export function getLockerInfo() {
-  return httpClient.get<LockerInfo>('/locker')
+  return mockResponse(MOCK_LOCKER)
 }

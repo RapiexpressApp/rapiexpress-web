@@ -1,22 +1,17 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
+import ForgotPasswordPage from '@/pages/ForgotPasswordPage'
 import DashboardPage from '@/pages/DashboardPage'
 import PackageTrackingPage from '@/pages/PackageTrackingPage'
+import LockerPage from '@/pages/LockerPage'
+import QuotePage from '@/pages/QuotePage'
+import ActivityPage from '@/pages/ActivityPage'
+import PaymentsPage from '@/pages/PaymentsPage'
+import HelpPage from '@/pages/HelpPage'
 import LandingPage from '@/pages/LandingPage'
-import { useSession } from '@/features/auth/hooks/useSession'
-
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useSession()
-  if (!isAuthenticated) return <Navigate to="/login" replace />
-  return <>{children}</>
-}
-
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useSession()
-  if (isAuthenticated) return <Navigate to="/dashboard" replace />
-  return <>{children}</>
-}
+import { AppLayout } from '@/app/layouts/AppLayout'
+import { ProtectedRoute, PublicRoute } from '@/app/guards/route-guards'
 
 export function AppRouter() {
   return (
@@ -39,21 +34,28 @@ export function AppRouter() {
         }
       />
       <Route
-        path="/dashboard"
+        path="/forgot-password"
         element={
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
+          <PublicRoute>
+            <ForgotPasswordPage />
+          </PublicRoute>
         }
       />
       <Route
-        path="/tracking/:trackingNumber"
         element={
           <ProtectedRoute>
-            <PackageTrackingPage />
+            <AppLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/locker" element={<LockerPage />} />
+        <Route path="/cotizador" element={<QuotePage />} />
+        <Route path="/actividad" element={<ActivityPage />} />
+        <Route path="/pagos" element={<PaymentsPage />} />
+        <Route path="/ayuda" element={<HelpPage />} />
+        <Route path="/tracking/:trackingNumber" element={<PackageTrackingPage />} />
+      </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

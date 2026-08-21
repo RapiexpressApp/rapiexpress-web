@@ -1,10 +1,15 @@
-import { httpClient } from '@/shared/lib/http-client'
-import type { Package, PackageHistory } from '../types'
+// =====================================================================
+// MOCK DE DEMOSTRACIÓN — ver src/shared/mocks/demo.ts
+// API auténtica (cuando exista): GET /packages, GET /packages/{n}/history
+// =====================================================================
+import { mockResponse, MOCK_PACKAGES, MOCK_HISTORIES } from '@/shared/mocks/demo'
+import type { PackageHistory } from '../types'
 
 export function getPackages() {
-  return httpClient.get<Package[]>('/packages')
+  return mockResponse(MOCK_PACKAGES)
 }
 
 export function getPackageHistory(trackingNumber: string) {
-  return httpClient.get<PackageHistory[]>(`/packages/${trackingNumber}/history`)
+  const history: PackageHistory[] = MOCK_HISTORIES[trackingNumber] ?? []
+  return mockResponse(history)
 }
