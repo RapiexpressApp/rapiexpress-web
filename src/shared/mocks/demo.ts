@@ -9,6 +9,9 @@
 import type { Package, PackageStatus } from '@/features/packages/types'
 import type { LockerInfo } from '@/features/locker/types'
 import type { AuthResponse } from '@/features/auth/types'
+import type { RateTable } from '@/features/quote/types'
+import type { AppNotification } from '@/features/notifications/types'
+import type { PaymentsOverview } from '@/features/payments/types'
 import type { ApiResponse } from '@/shared/types/api'
 
 function wrap<T>(value: T): ApiResponse<T> {
@@ -150,4 +153,98 @@ export function mockAuth(token: string): ApiResponse<AuthResponse> {
     data: { token, user: MOCK_USER },
     success: true,
   }
+}
+
+export const MOCK_RATES: RateTable = {
+  currency: 'USD',
+  handlingFee: 3,
+  categories: [
+    { id: 'ropa', label: 'Ropa y calzado', perKg: 5.5, minFee: 12 },
+    { id: 'electronica', label: 'Electrónica', perKg: 7, minFee: 15 },
+    { id: 'hogar', label: 'Hogar y decoración', perKg: 6, minFee: 15 },
+    { id: 'salud', label: 'Salud y belleza', perKg: 6.5, minFee: 15 },
+    { id: 'juguetes', label: 'Juguetes y hobby', perKg: 5.5, minFee: 12 },
+    { id: 'otros', label: 'Otros', perKg: 6, minFee: 15 },
+  ],
+  destinations: [
+    { id: 'quito', label: 'Quito', surcharge: 0 },
+    { id: 'guayaquil', label: 'Guayaquil', surcharge: 0 },
+    { id: 'cuenca', label: 'Cuenca', surcharge: 1.5 },
+    { id: 'otras', label: 'Otras ciudades', surcharge: 2.5 },
+  ],
+}
+
+function isoDaysAgo(days: number): string {
+  const d = new Date()
+  d.setDate(d.getDate() - days)
+  return d.toISOString()
+}
+
+export const MOCK_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: 'ntf-001',
+    kind: 'paquete',
+    title: 'Tu guía RXP-8821-3340 fue embarcada',
+    description: 'Salió de Miami rumbo a Ecuador. Te avisaremos en cada etapa.',
+    date: isoDaysAgo(1),
+    unread: true,
+  },
+  {
+    id: 'ntf-002',
+    kind: 'paquete',
+    title: 'RXP-1209-9018 llegó a nuestra bodega',
+    description: 'Recibimos tu paquete en Miami y ya tiene código de casillero.',
+    date: isoDaysAgo(3),
+    unread: true,
+  },
+  {
+    id: 'ntf-003',
+    kind: 'pago',
+    title: 'Pago confirmado · RXP-7712-5560',
+    description: 'Registramos tu pago. La guía pasó a entrega en Quito.',
+    date: isoDaysAgo(6),
+    unread: false,
+  },
+  {
+    id: 'ntf-004',
+    kind: 'sistema',
+    title: 'Recuerda tu código de casillero',
+    description: 'Usa RX-1942 en todas tus compras para identificar tu carga.',
+    date: isoDaysAgo(9),
+    unread: false,
+  },
+]
+
+export const MOCK_PAYMENTS_OVERVIEW: PaymentsOverview = {
+  currency: 'USD',
+  pendingTotal: 18.5,
+  payments: [
+    {
+      id: 'pay-001',
+      trackingNumber: 'RXP-8821-3340',
+      concept: 'Envío a Quito · 1.4 kg',
+      amount: 18.5,
+      currency: 'USD',
+      status: 'Pendiente',
+      date: isoDaysAgo(2),
+    },
+    {
+      id: 'pay-002',
+      trackingNumber: 'RXP-7712-5560',
+      concept: 'Envío a Quito · 2.1 kg',
+      amount: 14.25,
+      currency: 'USD',
+      status: 'Pagado',
+      date: isoDaysAgo(8),
+    },
+    {
+      id: 'pay-003',
+      trackingNumber: 'RXP-6681-2903',
+      concept: 'Envío a Guayaquil · 0.8 kg',
+      amount: 9.9,
+      currency: 'USD',
+      status: 'Pagado',
+      date: isoDaysAgo(15),
+    },
+  ],
 }

@@ -1,7 +1,13 @@
 import type { ApiError, ApiResponse } from '@/shared/types/api'
 import { useAuthStore } from '@/stores/authStore'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api'
+const BASE_URL: string | undefined = import.meta.env.VITE_API_BASE_URL
+
+if (!BASE_URL) {
+  console.warn(
+    '[http-client] VITE_API_BASE_URL no está definido. Copia .env.example a .env y configura la URL de la API.',
+  )
+}
 
 export class HttpClientError extends Error implements ApiError {
   status: number
@@ -36,6 +42,10 @@ async function request<T>(
   })
 
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      useAuthStore.getState().clearAuth()
+      window.location.assign('/login')
+    }
     const payload = (await response.json().catch(() => null)) as
       | Partial<ApiError>
       | null

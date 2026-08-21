@@ -5,11 +5,12 @@ import { StatusStepper } from '@/features/packages/components/StatusStepper'
 import { TrackingTimeline } from '@/features/packages/components/TrackingTimeline'
 import { LoadingState } from '@/shared/components/feedback/LoadingState'
 import { EmptyState } from '@/shared/components/feedback/EmptyState'
+import { ErrorState } from '@/shared/components/feedback/ErrorState'
 
 export default function PackageTrackingPage() {
   const { trackingNumber } = useParams<{ trackingNumber: string }>()
   const navigate = useNavigate()
-  const { data, isLoading } = usePackageDetail(trackingNumber ?? '')
+  const { data, isLoading, isError, refetch } = usePackageDetail(trackingNumber ?? '')
 
   const history = data?.data ?? []
   const currentStatus = history[0]?.status
@@ -36,6 +37,13 @@ export default function PackageTrackingPage() {
 
       {isLoading ? (
         <LoadingState label="Cargando ruta..." />
+      ) : isError ? (
+        <ErrorState
+          title="No pudimos cargar el rastreo."
+          description="Verifica tu conexión e intenta de nuevo."
+          onRetry={() => void refetch()}
+          className="rounded-2xl border border-dashed border-border bg-card py-12"
+        />
       ) : history.length ? (
         <>
           <section className="animate-fade-in-up animate-delay-100">
