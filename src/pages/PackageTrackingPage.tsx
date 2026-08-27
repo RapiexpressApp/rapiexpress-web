@@ -20,14 +20,15 @@ export default function PackageTrackingPage() {
       <button
         type="button"
         onClick={() => navigate('/dashboard')}
-        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg px-0 py-1"
+        className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-all hover:-translate-y-px hover:border-brand/30 hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <ArrowLeft size={16} />
+        <ArrowLeft size={15} className="transition-transform duration-200 group-hover:-translate-x-0.5" />
         Volver a mis paquetes
       </button>
 
       <section className="animate-fade-in-up">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-brand-light">
+        <p className="inline-flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.25em] text-brand-light">
+          <span className="h-px w-6 bg-accent" aria-hidden />
           Rastreo de guía
         </p>
         <h1 className="mt-1 font-mono text-2xl font-medium tracking-wider text-brand-dark sm:text-3xl">

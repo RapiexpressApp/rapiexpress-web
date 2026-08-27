@@ -31,14 +31,14 @@ export function PackageCard({ pkg }: PackageCardProps) {
       onClick={() => navigate(`/tracking/${pkg.trackingNumber}`)}
       className="group relative grid cursor-pointer grid-rows-[auto_auto] overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <div className="relative overflow-hidden bg-ink p-4 text-white">
+      <div className="relative overflow-hidden bg-gradient-to-r from-brand-dark via-brand-mid to-brand p-4 text-white">
         <div className="absolute inset-0 bg-grid-dark" />
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <span className="absolute top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/15 to-transparent animate-glint" />
         </div>
         <div className="relative flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-sky-200/70">
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-accent/90">
               Guía aérea
             </p>
             <p className="mt-1 truncate font-mono text-sm tracking-wider text-white sm:text-base">

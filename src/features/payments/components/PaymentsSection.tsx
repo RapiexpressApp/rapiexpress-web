@@ -25,11 +25,11 @@ export function PaymentsSection() {
         />
       ) : overview ? (
         <div className="space-y-4">
-          <div className="relative overflow-hidden rounded-xl bg-ink p-4 text-white">
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-brand-dark via-brand-mid to-brand p-4 text-white">
             <div className="absolute inset-0 bg-grid-dark" />
             <div className="relative flex items-end justify-between gap-3">
               <div>
-                <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-sky-200/70">
+                <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-accent/90">
                   Saldo pendiente
                 </p>
                 <p className="mt-1 font-mono text-2xl font-medium tracking-tight">

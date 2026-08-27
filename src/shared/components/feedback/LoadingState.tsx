@@ -9,7 +9,7 @@ interface LoadingStateProps {
 export function LoadingState({ label = 'Cargando...', className }: LoadingStateProps) {
   return (
     <div className={cn('flex items-center gap-2 text-sm text-muted-foreground', className)}>
-      <Loader2 size={14} className="animate-spin" />
+      <Loader2 size={14} className="animate-spin text-brand-light" />
       {label}
     </div>
   )

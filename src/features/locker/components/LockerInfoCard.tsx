@@ -37,11 +37,11 @@ export function LockerInfoCard({ locker }: LockerInfoCardProps) {
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-brand/20 bg-card shadow-sm">
-      <div className="relative bg-ink p-5 text-white">
+      <div className="relative bg-gradient-to-r from-brand-dark via-brand-mid to-brand p-5 text-white">
         <div className="absolute inset-0 bg-grid-dark" />
         <div className="relative flex items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-sky-200/70">
+            <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-accent/90">
               Casillero internacional
             </p>
             <h2 className="mt-0.5 font-heading text-lg font-bold text-white">

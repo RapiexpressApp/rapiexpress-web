@@ -31,7 +31,7 @@ export function StatusStepper({ currentStatus }: StatusStepperProps) {
                   className={cn(
                     'flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all duration-300 sm:h-10 sm:w-10',
                     isCurrent
-                      ? 'scale-110 border-ink bg-ink text-yellow-400 shadow-lg shadow-ink/20'
+                      ? 'scale-110 border-brand-dark bg-brand-dark text-accent shadow-lg shadow-brand-dark/25'
                       : reached
                         ? 'border-brand bg-brand/10 text-brand'
                         : 'border-border bg-muted text-muted-foreground',

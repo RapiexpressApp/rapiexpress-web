@@ -88,7 +88,7 @@ export function QuoteCalculator() {
           </div>
 
           {quote ? (
-            <div className="rounded-xl border border-dashed border-border bg-paper p-4">
+            <div className="rounded-xl border border-brand/25 bg-brand-muted/60 p-4">
               <dl className="space-y-1.5 text-sm">
                 <div className="flex items-center justify-between gap-3">
                   <dt className="text-muted-foreground">
@@ -116,11 +116,11 @@ export function QuoteCalculator() {
                   </div>
                 )}
               </dl>
-              <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-border pt-3">
-                <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-brand/20 pt-3">
+                <span className="text-xs font-medium uppercase tracking-wide text-brand-dark/70">
                   Total estimado
                 </span>
-                <span className="font-mono text-xl font-medium text-brand-dark">
+                <span className="font-mono text-xl font-semibold text-brand-dark">
                   {formatCurrency(quote.total, rates.currency)}
                 </span>
               </div>

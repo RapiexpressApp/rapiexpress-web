@@ -65,11 +65,11 @@ export function PackageSummaryCards({ packages }: PackageSummaryCardsProps) {
       {cards.map(({ label, value, icon: Icon, accent, chip }) => (
         <div
           key={label}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm"
+          className="group relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/20 hover:shadow-md"
         >
           <span
             className={cn(
-              'absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-lg border',
+              'absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-lg border transition-transform duration-300 group-hover:scale-110',
               chip,
             )}
           >
