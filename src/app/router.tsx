@@ -6,7 +6,6 @@ import DashboardPage from '@/pages/DashboardPage'
 import PackageTrackingPage from '@/pages/PackageTrackingPage'
 import LockerPage from '@/pages/LockerPage'
 import QuotePage from '@/pages/QuotePage'
-import ActivityPage from '@/pages/ActivityPage'
 import PaymentsPage from '@/pages/PaymentsPage'
 import HelpPage from '@/pages/HelpPage'
 import LandingPage from '@/pages/LandingPage'
@@ -51,7 +50,6 @@ export function AppRouter() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/locker" element={<LockerPage />} />
         <Route path="/cotizador" element={<QuotePage />} />
-        <Route path="/actividad" element={<ActivityPage />} />
         <Route path="/pagos" element={<PaymentsPage />} />
         <Route path="/ayuda" element={<HelpPage />} />
         <Route path="/tracking/:trackingNumber" element={<PackageTrackingPage />} />
