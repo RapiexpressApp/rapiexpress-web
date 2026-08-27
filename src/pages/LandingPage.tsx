@@ -6,6 +6,8 @@ import { NosotrosSection } from '@/features/landing/components/NosotrosSection'
 import { ComoFuncionaSection } from '@/features/landing/components/ComoFuncionaSection'
 import { BeneficiosSection } from '@/features/landing/components/BeneficiosSection'
 import { CoberturaSection } from '@/features/landing/components/CoberturaSection'
+import { TiendasSection } from '@/features/landing/components/TiendasSection'
+import { ResenasSection } from '@/features/landing/components/ResenasSection'
 import { FaqSection } from '@/features/landing/components/FaqSection'
 import { FinalCtaSection } from '@/features/landing/components/FinalCtaSection'
 import { LandingFooter } from '@/features/landing/components/LandingFooter'
@@ -24,6 +26,8 @@ export default function LandingPage() {
         <ComoFuncionaSection />
         <BeneficiosSection />
         <CoberturaSection />
+        <TiendasSection />
+        <ResenasSection />
         <FaqSection />
         <FinalCtaSection />
       </main>
