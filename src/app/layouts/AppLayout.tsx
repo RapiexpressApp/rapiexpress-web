@@ -1,19 +1,17 @@
-import { Link, NavLink, Outlet } from 'react-router-dom'
-import { Bell, Box, Calculator, Home, LifeBuoy, LogOut, Wallet } from 'lucide-react'
+import { NavLink, Outlet } from 'react-router-dom'
+import { Box, Calculator, Home, LifeBuoy, LogOut, Wallet } from 'lucide-react'
 import { Logo } from '@/shared/components/layout/Logo'
 import { useSession } from '@/features/auth/hooks/useSession'
+import { NotificationsMenu } from '@/features/notifications/components/NotificationsMenu'
 import { cn } from '@/shared/lib/utils'
 
 const navItems = [
   { to: '/dashboard', label: 'Inicio', icon: Home },
   { to: '/locker', label: 'Casillero', icon: Box },
   { to: '/cotizador', label: 'Cotizador', icon: Calculator },
-  { to: '/actividad', label: 'Actividad', icon: Bell },
   { to: '/pagos', label: 'Pagos', icon: Wallet },
   { to: '/ayuda', label: 'Ayuda', icon: LifeBuoy },
 ]
-
-const tabItems = navItems.filter((item) => item.to !== '/actividad')
 
 function initials(name?: string) {
   if (!name) return 'C'
@@ -32,8 +30,9 @@ export function AppLayout() {
   return (
     <div className="min-h-screen bg-paper text-foreground">
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border bg-card md:flex">
-        <div className="flex h-16 items-center border-b border-border px-5">
+        <div className="flex h-16 items-center justify-between gap-3 border-b border-border px-5">
           <Logo to="/dashboard" className="h-8" />
+          <NotificationsMenu align="start" />
         </div>
 
         <nav aria-label="Navegación principal" className="flex-1 space-y-1 overflow-y-auto p-3">
@@ -82,13 +81,7 @@ export function AppLayout() {
           <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-6">
             <Logo to="/dashboard" className="h-7" />
             <div className="flex items-center gap-2">
-              <Link
-                to="/actividad"
-                aria-label="Ver actividad"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <Bell size={16} />
-              </Link>
+              <NotificationsMenu />
               <button
                 type="button"
                 onClick={logout}
@@ -111,7 +104,7 @@ export function AppLayout() {
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur-md md:hidden"
       >
         <div className="grid grid-cols-5 pb-[env(safe-area-inset-bottom)]">
-          {tabItems.map(({ to, label, icon: Icon }) => (
+          {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
