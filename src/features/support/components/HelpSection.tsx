@@ -15,7 +15,7 @@ export function HelpSection() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noreferrer"
-          className="flex h-10 items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex h-11 items-center justify-center gap-2 rounded-full bg-emerald-500 px-5 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition-all hover:-translate-y-px hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <MessageCircle size={16} />
           Escríbenos por WhatsApp

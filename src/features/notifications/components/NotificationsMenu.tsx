@@ -65,13 +65,13 @@ export function NotificationsMenu({ align = 'end' }: NotificationsMenuProps) {
         aria-expanded={open}
         aria-label="Ver notificaciones"
         className={cn(
-          'relative flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          open && 'text-ink',
+          'relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white/80 backdrop-blur transition-colors hover:bg-white/15 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
+          open && 'bg-white/15 text-white',
         )}
       >
         <Bell size={16} />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[10px] font-bold text-white">
+          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-brand-dark">
             {unreadCount}
           </span>
         )}
