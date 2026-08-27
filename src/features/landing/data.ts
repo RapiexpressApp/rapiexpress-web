@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Building2, Globe, HelpCircle, Plane, TrendingUp } from 'lucide-react'
+import { Building2, Globe, HelpCircle, Plane, ShoppingBag, TrendingUp } from 'lucide-react'
 
 export interface NavLink {
   label: string
@@ -12,6 +12,7 @@ export const navLinks: NavLink[] = [
   { label: 'Cómo funciona', href: '#como-funciona', icon: Plane },
   { label: 'Beneficios', href: '#beneficios', icon: TrendingUp },
   { label: 'Cobertura', href: '#cobertura', icon: Globe },
+  { label: 'Tiendas', href: '#tiendas', icon: ShoppingBag },
   { label: 'FAQ', href: '#preguntas-frecuentes', icon: HelpCircle },
 ]
 
